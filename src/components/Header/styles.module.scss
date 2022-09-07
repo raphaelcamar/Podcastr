@@ -17,4 +17,12 @@
     margin-left: auto;
     text-transform: capitalize;
   }
+
+  @media (max-width: 768px) {
+    padding: 1rem 1rem;
+
+    span {
+      display: none;
+    }
+  }
 }
