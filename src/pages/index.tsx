@@ -8,6 +8,7 @@ import styles from './home.module.scss';
 import Link from 'next/link';
 import { usePlayer } from '../contexts/PlayerContext';
 import Head from 'next/head';
+import { TextEllipsis } from '../components/TextEllipsis';
 
 type Episode = {
   id: string;
@@ -68,11 +69,11 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
         <table cellSpacing={0}>
           <thead>
             <tr>
-              <th></th>
+              <th className={styles.showInDesktop}></th>
               <th>Podcast</th>
-              <th>Integrantes</th>
+              <th className={styles.showInDesktop}>Integrantes</th>
               <th>Data</th>
-              <th>Duração</th>
+              <th className={styles.showInDesktop}>Duração</th>
               <th></th>
             </tr>
           </thead>
@@ -81,17 +82,19 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
             {allEpisodes.map((episode, index) => {
               return (
                 <tr key={episode.id}>
-                  <td>
+                  <td className={styles.showInDesktop}>
                     <Image alt="episode image" width={120} height={120} src={episode.thumbnail} objectFit={'cover'} />
                   </td>
                   <td>
                     <Link href={`/episode/${episode.id}`}>
-                      <a>{episode.title}</a>
+                      <a>
+                        <TextEllipsis>{episode.title}</TextEllipsis>
+                      </a>
                     </Link>
                   </td>
-                  <td>{episode.members}</td>
+                  <td className={styles.showInDesktop}>{episode.members}</td>
                   <td style={{ width: 100 }}>{episode.publishedAt}</td>
-                  <td>{episode.durationAsString}</td>
+                  <td className={styles.showInDesktop}>{episode.durationAsString}</td>
                   <td>
                     <button onClick={() => playlist(episodeList, index + latestEpisodes.length)}>
                       <Image src="/play-green.svg" alt="Tocar Episódio" width={24} height={24} />
@@ -108,21 +111,15 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('episodes', {
-    params: {
-      _limit: 12,
-      _sort: 'published_at',
-      _order: 'desc',
-    },
-  });
+  const { episodes } = await api();
 
-  const episodes = data.map(episode => {
+  const data = episodes.map(episode => {
     return {
       id: episode.id,
       title: episode.title,
       thumbnail: episode.thumbnail,
       members: episode.members,
-      publishedAt: format(parseISO(episode.published_at), 'd MMM yy', { locale: ptBR }),
+      publishedAt: format(parseISO(episode?.published_at), 'd MMM yy', { locale: ptBR }),
       duration: Number(episode.file.duration),
       durationAsString: convetDurationToTimeString(Number(episode.file.duration)),
       description: episode.description,
@@ -130,8 +127,8 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   });
 
-  const latestEpisodes = episodes.slice(0, 2);
-  const allEpisodes = episodes.slice(2, episodes.length);
+  const latestEpisodes = data.slice(0, 2);
+  const allEpisodes = data.slice(2, data.length);
 
   return {
     props: {

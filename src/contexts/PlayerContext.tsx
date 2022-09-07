@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-type Episode = {
+export type Episode = {
   title: string;
   members: string;
   thumbnail: string;

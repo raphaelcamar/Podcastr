@@ -4,8 +4,14 @@ import styles from '../styles/app.module.scss';
 import { Player } from '../components/Player';
 import { PlayerContextProvider } from '../contexts/PlayerContext';
 import { AppProps } from 'next/app';
+import { MobilePlayer } from '../components/MobilePlayer';
+import { useBreakpoint } from '../services/use-breakpoints';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const breakpoint = useBreakpoint();
+
+  console.log(breakpoint);
+
   return (
     <PlayerContextProvider>
       <div className={styles.wrapper}>
@@ -13,7 +19,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Header />
           <Component {...pageProps} />
         </main>
-        <Player />
+
+        {breakpoint <= 1420 ? <MobilePlayer /> : <Player />}
       </div>
     </PlayerContextProvider>
   );

@@ -8,6 +8,11 @@
     margin-top: 3rem;
     margin-bottom: 1.5rem;
   }
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
+
 }
 
 .latestEpisodes {
@@ -16,6 +21,10 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
 
     li {
       background: var(--white);
@@ -171,6 +180,12 @@
           filter: brightness(0.9);
         }
       }
+    }
+  }
+
+  .showInDesktop {
+    @media(max-width: 500px) {
+      display: none;
     }
   }
 }

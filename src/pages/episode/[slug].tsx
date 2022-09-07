@@ -1,6 +1,5 @@
 import format from 'date-fns/format';
 import { ptBR } from 'date-fns/locale';
-import parseISO from 'date-fns/parseISO';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { api } from '../../services/api';
 import { convetDurationToTimeString } from '../../utils/convertDurationToTimeString';
@@ -61,15 +60,9 @@ export default function Episode({ episode }: EpisodeProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data } = await api.get('episodes', {
-    params: {
-      _limit: 2,
-      _sort: 'published_at',
-      _order: 'desc',
-    },
-  });
+  const { episodes } = await api();
 
-  const paths = data.map(episode => {
+  const paths = episodes.map(episode => {
     return {
       params: {
         slug: episode.id,
@@ -86,17 +79,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ctx => {
   const { slug } = ctx.params;
 
-  const { data } = await api.get(`/episodes/${slug}`);
+  const { episodes } = await api();
+  const [data] = episodes.filter(episode => episode.id === slug) as any;
   const episode = {
-    id: data.id,
-    title: data.title,
-    thumbnail: data.thumbnail,
-    members: data.members,
-    publishedAt: format(parseISO(data.published_at), 'd MMM yy', { locale: ptBR }),
-    duration: Number(data.file.duration),
-    durationAsString: convetDurationToTimeString(Number(data.file.duration)),
-    description: data.description,
-    url: data.file.url,
+    id: data?.id || null,
+    title: data?.title || null,
+    thumbnail: data?.thumbnail || null,
+    members: data?.members || null,
+    publishedAt: format(new Date(), 'd MMM yy', { locale: ptBR }) || null,
+    duration: Number(data?.file?.duration) || null,
+    durationAsString: convetDurationToTimeString(Number(data?.file?.duration)) || null,
+    description: data?.description || null,
+    url: data?.file?.url || null,
   };
 
   return {
