@@ -1,0 +1,21 @@
+{
+  "extends": [
+		"eslint:recommended",
+		"next",
+		"prettier",
+		"plugin:prettier/recommended",
+		"plugin:react/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"plugins": [
+		"react",
+		"prettier"
+	],
+	"rules": {
+		"react/react-in-jsx-scope": "off",
+		"prettier/prettier": ["error", {
+			"singleQuote": true,
+			"semi": true
+		}]
+	}
+}
