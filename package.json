@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "lint": "next lint",
     "server": "json-server server.json -w -d 750 -p 3333"
   },
   "dependencies": {
@@ -21,6 +22,12 @@
   "devDependencies": {
     "@types/node": "^15.6.1",
     "@types/react": "^17.0.8",
-    "typescript": "^4.3.2"
+    "eslint": "^8.23.0",
+    "eslint-config-next": "12.2.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.30.1",
+    "prettier": "^2.5.1",
+    "typescript": "4.7.4"
   }
 }
