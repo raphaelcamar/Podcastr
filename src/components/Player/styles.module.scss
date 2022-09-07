@@ -29,6 +29,14 @@
       opacity: 0.5;
     }
   }
+
+  @media (max-width: 1420px) {
+    display: none
+  }
+
+  .wrapper {
+    padding-top: 2.5rem;
+  }
 }
 
 .currentEpisode {
@@ -80,17 +88,6 @@
     display: inline-block;
     width: 4rem;
     text-align: center;
-  }
-
-  .slider {
-    flex: 1;
-
-    .emptySlider {
-      width: 100%;
-      height: 4px;
-      background: var(--purple-300);
-      border-radius: 2px;
-    }
   }
 }
 
