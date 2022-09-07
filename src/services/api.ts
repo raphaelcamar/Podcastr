@@ -1,5 +1,5 @@
-import axios from 'axios';
+import data from './data.json';
 
-export const api = axios.create({
-  baseURL: 'http://localhost:3333/',
-});
+export const api = async () => {
+  return data;
+};
