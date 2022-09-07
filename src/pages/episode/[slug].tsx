@@ -6,31 +6,28 @@ import { api } from '../../services/api';
 import { convetDurationToTimeString } from '../../utils/convertDurationToTimeString';
 import styles from './episode.module.scss';
 import Image from 'next/image';
-import Link from 'next/link'
+import Link from 'next/link';
 import { usePlayer } from '../../contexts/PlayerContext';
 import Head from 'next/head';
 
-type Episode = {
+type EpisodeType = {
   id: string;
-  title: string,
-  thumbnail: string,
-  members: string,
-  publishedAt: string,
-  duration: number,
-  durationAsString: string,
+  title: string;
+  thumbnail: string;
+  members: string;
+  publishedAt: string;
+  duration: number;
+  durationAsString: string;
   description: string;
-  url: string
-}
-
+  url: string;
+};
 
 type EpisodeProps = {
-  episode: Episode;
-}
+  episode: EpisodeType;
+};
 
-
-export default function Episode({episode}: EpisodeProps){
-
-  const { play } = usePlayer()
+export default function Episode({ episode }: EpisodeProps) {
+  const { play } = usePlayer();
 
   return (
     <div className={styles.episode}>
@@ -40,19 +37,14 @@ export default function Episode({episode}: EpisodeProps){
       <div className={styles.thumbnailContainer}>
         <Link href={'/'}>
           <button>
-            <img src="/arrow-left.svg" alt="Voltar" />
+            <Image src="/arrow-left.svg" alt="Voltar" width={16} height={16} />
           </button>
         </Link>
-       
-        <Image
-          width={700}
-          height={160}
-          objectFit={'cover'}
-          src={episode.thumbnail}
-        />
+
+        <Image width={700} height={160} objectFit={'cover'} src={episode.thumbnail} alt="episode iamge" />
 
         <button onClick={() => play(episode)}>
-          <img src="/play.svg" alt="Tocar episódio" />
+          <Image src="/play.svg" alt="Tocar episódio" width={32} height={32} />
         </button>
       </div>
 
@@ -63,57 +55,54 @@ export default function Episode({episode}: EpisodeProps){
         <span>{episode.durationAsString}</span>
       </header>
 
-      <div className={styles.description} dangerouslySetInnerHTML={{__html: episode.description}}/>
+      <div className={styles.description} dangerouslySetInnerHTML={{ __html: episode.description }} />
     </div>
-  )
+  );
 }
 
-
-export const getStaticPaths: GetStaticPaths = async () =>{
-
+export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await api.get('episodes', {
     params: {
       _limit: 2,
       _sort: 'published_at',
-      _order: 'desc'
-    }
+      _order: 'desc',
+    },
   });
 
   const paths = data.map(episode => {
     return {
       params: {
-        slug: episode.id
-      }
-    }
-  })
+        slug: episode.id,
+      },
+    };
+  });
 
   return {
     paths,
     fallback: 'blocking',
-  }
-}
+  };
+};
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
-
-  const { slug } = ctx.params
+export const getStaticProps: GetStaticProps = async ctx => {
+  const { slug } = ctx.params;
 
   const { data } = await api.get(`/episodes/${slug}`);
-    const episode =  {
-      id: data.id,
-      title: data.title,
-      thumbnail: data.thumbnail,
-      members: data.members,
-      publishedAt: format(parseISO(data.published_at), 'd MMM yy', {locale: ptBR}),
-      duration: Number(data.file.duration),
-      durationAsString: convetDurationToTimeString(Number(data.file.duration)),
-      description: data.description,
-      url: data.file.url
-    };
+  const episode = {
+    id: data.id,
+    title: data.title,
+    thumbnail: data.thumbnail,
+    members: data.members,
+    publishedAt: format(parseISO(data.published_at), 'd MMM yy', { locale: ptBR }),
+    duration: Number(data.file.duration),
+    durationAsString: convetDurationToTimeString(Number(data.file.duration)),
+    description: data.description,
+    url: data.file.url,
+  };
 
   return {
     props: {
-      episode
+      episode,
     },
-    revalidate: 60 * 60 * 24 // 24 horas
-  }
-}
+    revalidate: 60 * 60 * 24, // 24 horas
+  };
+};
