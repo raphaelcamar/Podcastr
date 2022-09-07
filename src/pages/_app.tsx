@@ -10,8 +10,6 @@ import { useBreakpoint } from '../services/use-breakpoints';
 function MyApp({ Component, pageProps }: AppProps) {
   const breakpoint = useBreakpoint();
 
-  console.log(breakpoint);
-
   return (
     <PlayerContextProvider>
       <div className={styles.wrapper}>
