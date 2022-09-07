@@ -6,13 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "server": "json-server server.json -w -d 750 -p 3333"
+    "lint": "next lint"
   },
   "dependencies": {
-    "axios": "^0.21.1",
     "date-fns": "^2.22.1",
-    "json-server": "^0.17.0",
     "next": "^12.2.5",
     "rc-slider": "^9.7.2",
     "react": "17.0.2",
