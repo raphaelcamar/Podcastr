@@ -86,6 +86,7 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps){
       setCurrentEpisodeIndex(nextRandomEpisodeIndex);
     }else if(hasNext){
       const nextEpisodeIndex = currentEpisodeIndex + 1;
+      setCurrentEpisodeIndex(nextEpisodeIndex)
     }
   }
 
