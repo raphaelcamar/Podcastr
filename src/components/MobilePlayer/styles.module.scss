@@ -1,0 +1,52 @@
+.mobilePlayerContainer {
+  position: absolute;
+  bottom: 0;
+  height: 78px;
+  width: 100%;
+  padding: 24px;
+  background: var(--purple-500);
+  color: var(--white);
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  gap: 48px;
+
+  img {
+    border-radius: 8px;
+    background:linear-gradient(143.8deg, rgba(145, 100, 250, 0.8), rgba(0, 0, 0, 0) 100%);
+  }
+
+  @media (max-width: 1420px) {
+    display: flex
+  }
+
+  @media (max-width: 720px) {
+    gap: 12px;
+  }
+
+
+  .wrapperinformations {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+
+    p {
+      font: 600 1rem Lexend, sans-serif;
+      line-height: 1.75rem;
+      max-width: 400px;
+    }
+
+    span {
+      font-weight: 600;
+    }
+  }
+
+  .player {
+    width: 100%;
+  }
+
+  .playerActions {
+    min-width: 300px;
+  }
+}

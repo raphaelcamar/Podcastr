@@ -1,0 +1,9 @@
+.textEllipsis {
+  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+}

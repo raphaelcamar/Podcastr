@@ -1,0 +1,21 @@
+.slider {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+
+  span {
+    display: inline-block;
+    width: 4rem;
+    text-align: center;
+  }
+
+  .emptySlider {
+    width: 100%;
+    height: 4px;
+    background: var(--purple-300);
+    border-radius: 2px;
+  }
+}
