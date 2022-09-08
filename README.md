@@ -16,9 +16,8 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Available routes
-- /dashboard -> Dashboard screen
-- /users -> Users list
-- /users/create -> Create user
+- / -> episodes
+- /episode/:id -> Episode
 
 ## Technologies
 - ReactJS
